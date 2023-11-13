@@ -1,0 +1,2 @@
+undetected-chromedriver==3.5.3
+xextract==0.1.8

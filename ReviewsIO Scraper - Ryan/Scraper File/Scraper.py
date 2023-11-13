@@ -18,6 +18,11 @@ else:
     except:
         url = str(sys.argv[1])
 
+    # remove trailing slash
+    if url[-1] == "/":
+        url = url[:-1]
+
+
     no_of_days = int(sys.argv[2])
 
     print("Script name:", script_name)
@@ -76,6 +81,10 @@ uc_options.headless = False
 driver = uc.Chrome(options=uc_options)
 driver.maximize_window()
 cloudflare_url = "https://www.reviews.io/company-reviews/store/www.super.com/Na?xhr"
+
+store_name = url.split('/store/')[1].split('/')[0]
+
+
 
 # Open a new tab with the specified URL
 driver.execute_script(
@@ -161,9 +170,8 @@ while True:
     print(f"Pages Scraped: {pages_scraped}")
 
 # save data into json file
-# current date - trustpilot_scraper_110823_curve.com.json
-current_datetime = datetime.now().strftime("%d%m%y")
-file_name = f"reviewsio_scraper_{current_datetime}.json"
+current_datetime = datetime.now().strftime("%m%d%y")
+file_name = f"reviewsio_{store_name}_{current_datetime}.json"
 with open(file_name, 'w', encoding='utf-8') as f:
     json.dump(data, f, indent=4)
 

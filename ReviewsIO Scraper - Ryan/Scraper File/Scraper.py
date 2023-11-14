@@ -173,4 +173,4 @@ with open(file_name, 'w', encoding='utf-8') as f:
 
 driver.quit()
 
-print(f"Scraping Complete, Scraped {pages_scraped+1} pages")
+print(f"Scraping Complete, Scraped {len(data)} reviews")

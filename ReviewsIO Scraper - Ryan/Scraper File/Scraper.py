@@ -22,7 +22,6 @@ else:
     if url[-1] == "/":
         url = url[:-1]
 
-
     no_of_days = int(sys.argv[2])
 
     print("Script name:", script_name)
@@ -84,15 +83,13 @@ cloudflare_url = "https://www.reviews.io/company-reviews/store/www.super.com/Na?
 
 store_name = url.split('/store/')[1].split('/')[0]
 
-
-
 # Open a new tab with the specified URL
 driver.execute_script(
-    f"window.open('{cloudflare_url}', '_blank');")
+    f"window.open('{url}', '_blank');")
 
 time.sleep(4)
 driver.execute_script(
-    f"window.open('{cloudflare_url}', '_blank');")
+    f"window.open('{url}', '_blank');")
 time.sleep(16)
 
 # Switch to the first tab
@@ -139,6 +136,11 @@ while True:
         days_since_review = days_until_date(review_date)
 
 
+
+        if no_of_days < days_since_review:
+            keep_running = False
+            break
+
         data.append({
             "user": author_name,
             "stars": review_rating,
@@ -148,13 +150,7 @@ while True:
             "details": review_description
         })
 
-        print(days_since_review, days_since_review <= no_of_days)
-
-        if no_of_days < days_since_review:
-            keep_running = False
-            break
-
-
+        print(f"Review {review_index + 1} scraped")
 
     if not keep_running:
         break
@@ -177,4 +173,4 @@ with open(file_name, 'w', encoding='utf-8') as f:
 
 driver.quit()
 
-print(f"Scraping Complete, Scraped {pages_scraped} pages")
+print(f"Scraping Complete, Scraped {pages_scraped+1} pages")
